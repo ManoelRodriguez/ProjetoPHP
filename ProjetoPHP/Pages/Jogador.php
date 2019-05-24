@@ -1,7 +1,6 @@
 <?php
 
-class Jogador extends Banco 
-{
+class Jogador extends Banco {
 
     private $id;
     private $nome;
@@ -19,7 +18,8 @@ class Jogador extends Banco
         $instrucao = $this->pdo->query("SELECT * FROM JOGADOR ORDER BY GOLS DESC");
         return $instrucao->fetchAll();
     }
-    public function select2($id)
+
+    public function select2($id) //Essse select retornará somente os dados de um único jogador solicitado, na página Informacoes-jogadors.php
     {
         $instrucao = $this->pdo->query("SELECT * FROM JOGADOR WHERE ID = $id");
         return $instrucao->fetchAll();
@@ -44,7 +44,16 @@ class Jogador extends Banco
     public function update($id, $nome, $time, $gols)
     {
         $sql = "UPDATE JOGADOR SET NOME = $nome, TIME = $time, GOLS = $gols   WHERE id = $id";
-        return $sql;
+        $instrucao = $this->pdo->prepare($sql);
+        return $instrucao->execute();
+    }
+    
+    public function delete($id)
+    {
+        $sql = "DELETE FROM JOGADOR WHERE ID=:id";
+        $instrucao = $this->pdo->prepare($sql);
+        $instrucao->bindParam(':id', $id);
+        return $instrucao->execute();
     }
 
     public function __get($id)

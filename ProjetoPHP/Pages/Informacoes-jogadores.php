@@ -5,12 +5,11 @@ require 'Usuario.php';
 $id = $_GET['id'] ?? null;
 $jogador = new Jogador('jogadores');
 $jogadores = $jogador->select2($id);
-/*if(!is_null('salvar')){
+/*if (!is_null('salvar'))
+{
     $jogador->update($_POST['id'], $_POST['nome'], $_POST['time'], $_POST['gols']);
 }*/
-
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -41,7 +40,7 @@ $jogadores = $jogador->select2($id);
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        
+
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login.php" id="entrar" style="position: absolute; right: 10px; margin-top: -30px; font-size: 20px">Entrar</a>
                         </li>
@@ -54,15 +53,17 @@ $jogadores = $jogador->select2($id);
         <h2 style="margin-top: 200px">Informações </h2>
         <hr class="star-light mb-5">
         <form method="post" style="margin-top: 50px; width: 300px; ">
-            <?php foreach ($jogadores as $jogador): ?>
-            <input type="text" name="nome" value="<?= $jogador['nome']?>" class="form-control" style="margin-bottom: 20px;">
-            <input type="text" name="time" value="<?= $jogador['time']?>" class="form-control" style="margin-bottom: 20px;">
-            <input type="number" name="gols" value="<?= $jogador['gols']?>" class="form-control" style="margin-bottom: 20px;" >
-            <?php endforeach; ?>
-            <input class="btn btn-primary" type="submit" name="salvar" value="Salvar">
+<?php foreach ($jogadores as $jogador): ?>
+                <input type="text" name="nome" value="<?= $jogador['nome'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="text" name="time" value="<?= $jogador['time'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="number" name="gols" value="<?= $jogador['gols'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input class="btn btn-primary" type="submit" name="salvar" value="Salvar">
+                <button class="btn btn-primary" style="margin-left: 50px" name="excluir"><a href="excluir-jogadores.php?id=<?= $jogador['id'] ?>" style="text-decoration: none; color: white">Excluir</a></button>
+<?php endforeach; ?>
+
         </form>
     </center>
-    
+
     <center>
 
         <footer style="position: absolute; bottom: 0; width: 100%">
