@@ -5,7 +5,8 @@ require 'Usuario.php';
 $usuario = new Usuario('usuarios');
 $usuarios = $usuario->select(); //$usuarios vira um vetor de vetores, e possui cada linha da tabela 
 
-if(isset($_POST['nome'])){
+if (isset($_POST['nome']))
+{
     $usuarios = new Usuario('usuarios');
     $usuarios->inserir([$_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['senha']]);
     header('LOCATION: exibir-usuarios.php');
@@ -161,14 +162,14 @@ if(isset($_POST['nome'])){
                     <div class="card py-4 h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0" style="color: black ">Felippe Papai</h4>
+                            <h4 class="text-uppercase m-0" style="color: black ">Anota Gols</h4>
                             <hr class="my-4">
                             <center>
                                 <div class="circle">
-                                    <a href="https://github.com/FelippeP"><img src="img/papai-noel.jpg"></a>
+                                    <img src="img/logo2.png">
                                 </div>
                             </center>
-                            <div class="small text-black-50" style="color: black">Análise e Desenvolvimento de Sistemas, Fatec</div>
+                            <div class="small text-black-50" style="color: black">A sua aplicação favorita</div>
                         </div>
                     </div>
                 </div>
@@ -176,14 +177,14 @@ if(isset($_POST['nome'])){
                     <div class="card py-4 h-100">
                         <div class="card-body text-center">
                             <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                            <h4 class="text-uppercase m-0" style="color: black ">Rafael</h4>
+                            <h4 class="text-uppercase m-0" style="color: black ">Contato</h4>
                             <hr class="my-4">
                             <center>
                                 <div class="circle">
-                                    <a href="https://github.com/Bovecchio"><img src="img/rafael.jpg"></a>
+                                    <img src="img/wpp.png">
                                 </div>
                             </center>
-                            <div class="small text-black-50" style="color: black">Análise e Desenvolvimento de Sistemas, Fatec</div>
+                            <div class="small text-black-50" style="color: black">+55 (13) 99999-9999</div>
                         </div>
                     </div>
                 </div>
