@@ -2,32 +2,20 @@
 require 'Banco.php';
 require 'Jogador.php';
 require 'Usuario.php';
-$usuario = new Usuario('usuarios');
-$usuarios = $usuario->select(); //$usuarios vira um vetor de vetores, e possui cada linha da tabela 
+$id = $_GET['id'] ?? null;
+$jogador = new Jogador('jogadores');
+$jogadores = $jogador->select2($id);
+/*if(!is_null('salvar')){
+    $jogador->update($_POST['id'], $_POST['nome'], $_POST['time'], $_POST['gols']);
+}*/
 
-if (!is_null($_POST['email']))
-{
-    for ($i = 1; $i <= count($usuarios); $i++)
-    {
-        if ($_POST['email'] == $usarios[$i])
-        {
-            for ($j = $i; $j <= count($usarios); $j++)
-            {
-                if ($_POST['senha'] == $usarios[$i])
-                {
-                    header('LOCATION: principal.php');
-                }
-            }
-        }
-    }
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Anota Gols - Novos Jogadores</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -53,7 +41,7 @@ if (!is_null($_POST['email']))
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-
+                        
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login.php" id="entrar" style="position: absolute; right: 10px; margin-top: -30px; font-size: 20px">Entrar</a>
                         </li>
@@ -63,14 +51,18 @@ if (!is_null($_POST['email']))
         </nav>
 
     <center>
-        <h2 style="margin-top: 200px">Login</h2>  
-        <form method="post" style="margin-top: 50px; width: 350px; ">
-            <input type="email" name="email" placeholder="E-mail" class="form-control" style="margin-bottom: 20px;" required >
-            <input type="password" name="senha" placeholder="Senha" class="form-control" style="margin-bottom: 20px;" required>
-            <button class="btn btn-primary" name="login"><a href="#" style="text-decoration: none; color: black">Entrar</a></button>
+        <h2 style="margin-top: 200px">Informações </h2>
+        <hr class="star-light mb-5">
+        <form method="post" style="margin-top: 50px; width: 300px; ">
+            <?php foreach ($jogadores as $jogador): ?>
+            <input type="text" name="nome" value="<?= $jogador['nome']?>" class="form-control" style="margin-bottom: 20px;">
+            <input type="text" name="time" value="<?= $jogador['time']?>" class="form-control" style="margin-bottom: 20px;">
+            <input type="number" name="gols" value="<?= $jogador['gols']?>" class="form-control" style="margin-bottom: 20px;" >
+            <?php endforeach; ?>
+            <input class="btn btn-primary" type="submit" name="salvar" value="Salvar">
         </form>
     </center>
-
+    
     <center>
 
         <footer style="position: absolute; bottom: 0; width: 100%">

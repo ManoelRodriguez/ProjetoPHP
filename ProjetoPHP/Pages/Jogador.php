@@ -1,38 +1,55 @@
 <?php
 
-class Jogador extends Banco
+class Jogador extends Banco 
 {
-    
+
     private $id;
     private $nome;
     private $time;
     private $gols;
-    
+
     public function __construct($id)
     {
         $this->id = $id;
         $this->conectar();
     }
-    public function select() 
+
+    public function select()
     {
-        $instrucao = $this->pdo->query("SELECT * FROM JOGADOR");
+        $instrucao = $this->pdo->query("SELECT * FROM JOGADOR ORDER BY GOLS DESC");
         return $instrucao->fetchAll();
     }
+    public function select2($id)
+    {
+        $instrucao = $this->pdo->query("SELECT * FROM JOGADOR WHERE ID = $id");
+        return $instrucao->fetchAll();
+    }
+
     public function inserir($valores)
     {
-        $sql = "INSERT INTO JOGADOR VALUES (?";
-        for($i = 1; $i < count($valores); $i++){
+        $sql = "INSERT INTO JOGADOR(NOME, TIME, GOLS) VALUES (?";
+        for ($i = 1; $i < count($valores); $i++)
+        {
             $sql .= ',?';
         }
         $sql .= ')';
         $instrucao = $this->pdo->prepare($sql);
-        for($i = 0; $i < count($valores); $i++){
-            $instrucao->bindParam(($i+1), $valores[$i]);
+        for ($i = 0; $i < count($valores); $i++)
+        {
+            $instrucao->bindParam(($i + 1), $valores[$i]);
         }
         return $instrucao->execute();
     }
+
+    public function update($id, $nome, $time, $gols)
+    {
+        $sql = "UPDATE JOGADOR SET NOME = $nome, TIME = $time, GOLS = $gols   WHERE id = $id";
+        return $sql;
+    }
+
     public function __get($id)
     {
-        return $this->$nome;
+        return $this->$id;
     }
+
 }

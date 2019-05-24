@@ -1,25 +1,13 @@
 <?php
 require 'Banco.php';
 require 'Jogador.php';
-require 'Usuario.php';
-$usuario = new Usuario('usuarios');
-$usuarios = $usuario->select(); //$usuarios vira um vetor de vetores, e possui cada linha da tabela 
+$jogador = new Jogador('jogadores');
+$jogadores = $jogador->select(); //$jogadores vira um vetor de vetores, e possui cada linha da tabela 
 
-if (!is_null($_POST['email']))
-{
-    for ($i = 1; $i <= count($usuarios); $i++)
-    {
-        if ($_POST['email'] == $usarios[$i])
-        {
-            for ($j = $i; $j <= count($usarios); $j++)
-            {
-                if ($_POST['senha'] == $usarios[$i])
-                {
-                    header('LOCATION: principal.php');
-                }
-            }
-        }
-    }
+if(isset($_POST['nome'])){
+    $jogadores = new Jogador('jogadores');
+    $jogadores->inserir([$_POST['nome'], $_POST['time'], $_POST['gols']]);
+    header('LOCATION: classificacao.php');
 }
 ?>
 
@@ -27,7 +15,7 @@ if (!is_null($_POST['email']))
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Anota Gols - Novos Jogadores</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -53,7 +41,7 @@ if (!is_null($_POST['email']))
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-
+                        
                         <li class="nav-item mx-0 mx-lg-1">
                             <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login.php" id="entrar" style="position: absolute; right: 10px; margin-top: -30px; font-size: 20px">Entrar</a>
                         </li>
@@ -63,11 +51,13 @@ if (!is_null($_POST['email']))
         </nav>
 
     <center>
-        <h2 style="margin-top: 200px">Login</h2>  
-        <form method="post" style="margin-top: 50px; width: 350px; ">
-            <input type="email" name="email" placeholder="E-mail" class="form-control" style="margin-bottom: 20px;" required >
-            <input type="password" name="senha" placeholder="Senha" class="form-control" style="margin-bottom: 20px;" required>
-            <button class="btn btn-primary" name="login"><a href="#" style="text-decoration: none; color: black">Entrar</a></button>
+        <h2 style="margin-top: 200px">Novos Jogadores</h2>
+        <hr class="star-light mb-5">
+        <form method="post" style="margin-top: 50px; width: 300px; ">
+            <input type="text" name="nome" placeholder="Nome" class="form-control" style="margin-bottom: 20px;" required >
+            <input type="text" name="time" placeholder="Time" class="form-control" style="margin-bottom: 20px;" required>
+            <input type="number" name="gols" placeholder="Gols" class="form-control" style="margin-bottom: 20px;" required>
+            <input class="btn btn-primary" type="submit" name="enviar" value="Enviar">
         </form>
     </center>
 

@@ -1,3 +1,16 @@
+<?php
+require 'Banco.php';
+require 'Jogador.php';
+require 'Usuario.php';
+$usuario = new Usuario('usuarios');
+$usuarios = $usuario->select(); //$usuarios vira um vetor de vetores, e possui cada linha da tabela 
+
+if(isset($_POST['nome'])){
+    $usuarios = new Usuario('usuarios');
+    $usuarios->inserir([$_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['senha']]);
+    header('LOCATION: exibir-usuarios.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +44,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="home.php">Anota Gols</a>
+                <a class="navbar-brand js-scroll-trigger" href="#topo">Anota Gols</a>
                 <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -56,9 +69,9 @@
         </nav>
 
         <!-- Header -->
-        <header class="masthead bg-primary text-white text-center">
+        <header class="masthead bg-primary text-white text-center" id="topo">
             <div class="container">
-                <img class="img-fluid mb-5 d-block mx-auto" id="logo" src="img/logo.png" alt="">
+                <img class="img-fluid mb-5 d-block mx-auto" id="logo" src="img/logo2.png" alt="">
                 <h1 class="text-uppercase mb-0" style="margin-top: -100px">Anota Gols</h1>
                 <hr class="star-light">
                 <h2 class="font-weight-light mb-0">Sua artilharia Online</h2>
@@ -98,22 +111,22 @@
 
             <h2 class="text-center text-uppercase text-white">Cadastrar-se</h2>
             <hr class="star-light mb-5">
-            <form>
+            <form method="post">
                 <center>
                     <div id="form1">
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control" id="inputEmail4" placeholder="Nome" required>
+                            <input type="text" name="nome" class="form-control" id="inputEmail4" placeholder="Nome" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="text" class="form-control" id="inputPassword4" placeholder="Sobrenome" required>
+                            <input type="text" name="sobrenome" class="form-control" id="inputPassword4" placeholder="Sobrenome" required>
                         </div>
                     </div>
                     <div id="form2">
                         <div class="form-group col-md-6">
-                            <input type="Email" class="form-control" id="inputEmail4" placeholder="Email" required>
+                            <input type="Email" name="email" class="form-control" id="inputEmail4" placeholder="Email" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="password" class="form-control" id="inputPassword4" placeholder="Senha" required>
+                            <input type="password" name="senha" class="form-control" id="inputPassword4" placeholder="Senha" required>
                         </div>
                     </div>
                     <div class="form-group">

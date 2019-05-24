@@ -23,6 +23,13 @@
 
         <!-- Custom styles for this template -->
         <link href="css/freelancer.css" rel="stylesheet">
+        
+        <style>
+            .img-fluid{
+                border: 2px solid black;
+                box-shadow: 2px black;
+            }
+        </style>
 
     </head>
 
@@ -64,16 +71,16 @@
                 <hr class="star-dark mb-5">
                 <div class="row">
                     <div class="col-md-6 col-lg-4">
-                        <img class="img-fluid" src="img/messi2.jpg" alt="">
-                        <center><button class="btn btn-primary">Classificação</button></center>
+                        <img class="img-fluid rounded" src="img/messi2.jpg" alt="">
+                        <center><button class="btn btn-primary"><a href="classificacao.php" style="text-decoration: none; color: white">Classificação</a></button></center>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <img class="img-fluid" src="img/cristiano2.jpeg" alt="">
-                        <center><button class="btn btn-primary">Acrescentar Gols</button></center>
+                        <img class="img-fluid rounded" src="img/cristiano2.jpeg" alt="">
+                        <center><button class="btn btn-primary"><a href="novos-jogadores.php" style="text-decoration: none; color: white">Novos Jogadores</a></button></center>
                     </div>
                     <div class="col-md-6 col-lg-4">
-                        <img class="img-fluid" src="img/diego-costa.jpg" alt="">
-                        <center><button class="btn btn-primary">Alteração de Dados</button></center>
+                        <img class="img-fluid rounded" src="img/zidane.jpg" alt="">
+                        <center><button class="btn btn-primary">Minhas Informações</button></center>
                     </div>
 
                 </div>
