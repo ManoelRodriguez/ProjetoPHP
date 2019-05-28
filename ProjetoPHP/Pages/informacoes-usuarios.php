@@ -2,36 +2,15 @@
 require 'Banco.php';
 require 'Jogador.php';
 require 'Usuario.php';
+$id = $_GET['id'] ?? null;
 $usuario = new Usuario('usuarios');
-$usuarios = $usuario->select(); //$usuarios vira um vetor de vetores, e possui cada linha da tabela 
-$email = $_POST['email'] ?? null;
-$senha = $_POST['senha'] ?? null;
-if (!is_null($_POST['email']))
-{
-    $usuario->select2($_POST['email'], $_POST['senha']);
-    foreach ($usuarios as $usuario)
-    {
-        if ($usuario['email'] == $_POST['email'] && $usuario['senha'] == $_POST['senha'])
-        {
-            session_start(); //Habilita o VETOR $_SESSION
-            $_SESSION['email'] = $email;
-            $_SESSION['senha'] = $senha;
-            header('LOCATION: principal.php?email=' . $_POST['email'] . '&senha' . $_POST['senha']);
-        }
-    }
-}
-session_start();
-if (isset($_SESSION['email']))
-{
-    header('LOCATION: principal.php');
-}
+$usuarios = $usuario->select3($id);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
-        <title>Login</title>
+        <title>Anota Gols - Minhas Informações</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -67,11 +46,17 @@ if (isset($_SESSION['email']))
         </nav>
 
     <center>
-        <h2 style="margin-top: 200px">Login</h2>  
-        <form method="post" style="margin-top: 50px; width: 350px; ">
-            <input type="email" name="email" placeholder="E-mail" class="form-control" style="margin-bottom: 20px;" required >
-            <input type="password" name="senha" placeholder="Senha" class="form-control" style="margin-bottom: 20px;" required>
-            <button class="btn btn-primary" name="login"><a style="text-decoration: none; color: black">Entrar</a></button>
+        <h2 style="margin-top: 200px">Informações </h2>
+        <hr class="star-light mb-5">
+        <form method="post" style="margin-top: 50px; width: 300px; ">
+<?php foreach ($jogadores as $jogador): ?>
+                <input type="text" name="nome" value="<?= $jogador['nome'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="text" name="time" value="<?= $jogador['time'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="number" name="gols" value="<?= $jogador['gols'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input class="btn btn-primary" type="submit" name="salvar" value="Salvar">
+                <button class="btn btn-primary" style="margin-left: 50px" name="excluir"><a href="excluir-jogadores.php?id=<?= $jogador['id'] ?>" style="text-decoration: none; color: white">Excluir</a></button>
+<?php endforeach; ?>
+
         </form>
     </center>
 

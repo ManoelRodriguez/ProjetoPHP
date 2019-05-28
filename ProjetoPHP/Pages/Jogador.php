@@ -41,13 +41,13 @@ class Jogador extends Banco {
         return $instrucao->execute();
     }
 
-    public function update($id, $nome, $time, $gols)
+    public function update($nome, $time, $gols)
     {
-        $sql = "UPDATE JOGADOR SET NOME = $nome, TIME = $time, GOLS = $gols   WHERE id = $id";
+        $sql = "UPDATE JOGADOR SET NOME=" . $nome .",TIME=".$time.",GOLS=".$gols;
         $instrucao = $this->pdo->prepare($sql);
         return $instrucao->execute();
     }
-    
+
     public function delete($id)
     {
         $sql = "DELETE FROM JOGADOR WHERE ID=:id";

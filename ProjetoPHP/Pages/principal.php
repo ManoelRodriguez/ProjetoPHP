@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['email']))
+{ //Se não houver usuário autenticado
+    header('LOCATION: login.php'); //Redireciona para autenticação
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +30,7 @@
 
         <!-- Custom styles for this template -->
         <link href="css/freelancer.css" rel="stylesheet">
-        
+
         <style>
             .img-fluid{
                 border: 2px solid black;
@@ -38,7 +45,7 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="home.php">Anota Gols</a>
+                <a class="navbar-brand js-scroll-trigger" href="index.php">Anota Gols</a>
                 <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -47,15 +54,14 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Nome do Usuário
+                                <?= $_SESSION['email'] ?>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Minhas Informações</a>
-                                <a class="dropdown-item" href="#">Classificação</a>
-                                <a class="dropdown-item" href="#">Acresentar Gols</a>
-                                <a class="dropdown-item" href="#">Alterações</a>
+                                <a class="dropdown-item" href="minhas-informacoes.php">Minhas Informações</a>
+                                <a class="dropdown-item" href="classificacao.php">Classificação</a>
+                                <a class="dropdown-item" href="classificacao.php">Alterações</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Sair</a>
+                                <a class="dropdown-item" href="sair.php">Sair</a>
                             </div>
                         </li>
                     </ul>
@@ -80,7 +86,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4">
                         <img class="img-fluid rounded" src="img/zidane.jpg" alt="">
-                        <center><button class="btn btn-primary">Minhas Informações</button></center>
+                        <center><button class="btn btn-primary"><a href="minhas-informacoes.php" style="text-decoration: none; color: white">Minhas Informações</a></button></center>
                     </div>
 
                 </div>

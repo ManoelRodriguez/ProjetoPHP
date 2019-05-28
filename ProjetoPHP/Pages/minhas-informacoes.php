@@ -1,21 +1,17 @@
 <?php
 require 'Banco.php';
 require 'Jogador.php';
-$jogador = new Jogador('jogadores');
-$jogadores = $jogador->select(); //$jogadores vira um vetor de vetores, e possui cada linha da tabela 
-
-if(isset($_POST['nome'])){
-    $jogadores = new Jogador('jogadores');
-    $jogadores->inserir([$_POST['nome'], $_POST['time'], $_POST['gols']]);
-    header('LOCATION: classificacao.php');
-}
+require 'Usuario.php';
 session_start();
 if (!isset($_SESSION['email']))
 { //Se não houver usuário autenticado
     header('LOCATION: login.php'); //Redireciona para autenticação
 }
+$_SESSION['email'] ?? null;
+$email = $_SESSION['email'];
+$usuario = new Usuario('usuarios');
+$usuarios = $usuario->select3($email);
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -64,19 +60,24 @@ if (!isset($_SESSION['email']))
         </nav>
 
     <center>
-        <h2 style="margin-top: 200px">Novos Jogadores</h2>
+        <h2 style="margin-top: 200px">Informações </h2>
         <hr class="star-light mb-5">
         <form method="post" style="margin-top: 50px; width: 300px; ">
-            <input type="text" name="nome" placeholder="Nome" class="form-control" style="margin-bottom: 20px;" required >
-            <input type="text" name="time" placeholder="Time" class="form-control" style="margin-bottom: 20px;" required>
-            <input type="number" name="gols" placeholder="Gols" class="form-control" style="margin-bottom: 20px;" required>
-            <input class="btn btn-primary" type="submit" name="enviar" value="Enviar">
+            <?php foreach ($usuarios as $usuario): ?>
+                <input type="text" name="nome" value="<?= $usuario['nome'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="text" name="sobrenome" value="<?= $usuario['sobrenome'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="text" name="email" value="<?= $usuario['email'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="number" name="senha" value="<?= $usuario['senha'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input class="btn btn-primary" type="submit" name="salvar" value="Salvar">
+                <button class="btn btn-primary" style="margin-left: 50px" name="excluir"><a href="excluir-usuario.php?id=<?= $usuario['id'] ?>" style="text-decoration: none; color: white">Excluir</a></button>
+            <?php endforeach; ?>
+
         </form>
     </center>
 
     <center>
 
-        <footer style="position: absolute; bottom: 0; width: 100%">
+        <footer>
             <hr width="">
             Copyright &copy Fatec - 2019
         </footer>

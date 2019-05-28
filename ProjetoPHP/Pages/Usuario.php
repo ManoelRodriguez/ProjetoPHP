@@ -20,6 +20,22 @@ class Usuario extends Banco {
         return $instrucao->fetchAll();
     }
 
+    public function select2($email, $senha)
+    {
+        $instrucao = $this->pdo->query("SELECT * FROM USUARIO WHERE EMAIL = '$email' AND SENHA = '$senha'");
+        return $instrucao->fetchAll();
+    }
+
+    public function select3($email)
+    {
+        $instrucao = $this->pdo->query("SELECT * FROM USUARIO WHERE EMAIL = '$email'");
+        return $instrucao->fetchAll();
+    }
+    public function selectNome($email){
+        $instrucao = $this->pdo->query("SELECT NOME FROM USUARIO WHERE EMAIL = $email");
+        return $instrucao->fetchAll();
+    }
+
     public function inserir($valores)
     {
         $sql = "INSERT INTO USUARIO(NOME, SOBRENOME, EMAIL, SENHA) VALUES (?";
@@ -33,6 +49,13 @@ class Usuario extends Banco {
         {
             $instrucao->bindParam(($i + 1), $valores[$i]);
         }
+        return $instrucao->execute();
+    }
+    public function delete($id)
+    {
+        $sql = "DELETE FROM USUARIO WHERE ID=:id";
+        $instrucao = $this->pdo->prepare($sql);
+        $instrucao->bindParam(':id', $id);
         return $instrucao->execute();
     }
 

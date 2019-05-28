@@ -5,10 +5,14 @@ require 'Usuario.php';
 $id = $_GET['id'] ?? null;
 $jogador = new Jogador('jogadores');
 $jogadores = $jogador->select2($id);
-/*if (!is_null('salvar'))
-{
-    $jogador->update($_POST['id'], $_POST['nome'], $_POST['time'], $_POST['gols']);
-}*/
+//if(!is_null('salvar')){
+//    $jogador->update($_POST['nome'], $_POST['time'], $_POST['gols']);
+//}
+session_start();
+if (!isset($_SESSION['email']))
+{ //Se não houver usuário autenticado
+    header('LOCATION: login.php'); //Redireciona para autenticação
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -33,16 +37,24 @@ $jogadores = $jogador->select2($id);
     <body>
         <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
             <div class="container">
-                <a class="navbar-brand js-scroll-trigger" href="home.php">Anota Gols</a>
+                <a class="navbar-brand js-scroll-trigger" href="index.php">Anota Gols</a>
                 <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-
-                        <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-3 rounded" href="login.php" id="entrar" style="position: absolute; right: 10px; margin-top: -30px; font-size: 20px">Entrar</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <?= $_SESSION['email'] ?>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="minhas-informacoes.php">Minhas Informações</a>
+                                <a class="dropdown-item" href="classificacao.php">Classificação</a>
+                                <a class="dropdown-item" href="classificacao.php">Alterações</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="sair.php">Sair</a>
+                            </div>
                         </li>
                     </ul>
                 </div>
