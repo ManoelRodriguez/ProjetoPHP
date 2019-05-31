@@ -5,6 +5,11 @@ require 'Usuario.php';
 $id = $_GET['id'] ?? null;
 $usuario = new Usuario('usuarios');
 $usuarios = $usuario->select3($id);
+session_start();
+if (!isset($_SESSION['email']))
+{ //Se não houver usuário autenticado
+    header('LOCATION: login.php'); //Redireciona para autenticação
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -49,15 +54,19 @@ $usuarios = $usuario->select3($id);
         <h2 style="margin-top: 200px">Informações </h2>
         <hr class="star-light mb-5">
         <form method="post" style="margin-top: 50px; width: 300px; ">
-<?php foreach ($jogadores as $jogador): ?>
-                <input type="text" name="nome" value="<?= $jogador['nome'] ?>" class="form-control" style="margin-bottom: 20px;">
-                <input type="text" name="time" value="<?= $jogador['time'] ?>" class="form-control" style="margin-bottom: 20px;">
-                <input type="number" name="gols" value="<?= $jogador['gols'] ?>" class="form-control" style="margin-bottom: 20px;">
-                <input class="btn btn-primary" type="submit" name="salvar" value="Salvar">
-                <button class="btn btn-primary" style="margin-left: 50px" name="excluir"><a href="excluir-jogadores.php?id=<?= $jogador['id'] ?>" style="text-decoration: none; color: white">Excluir</a></button>
-<?php endforeach; ?>
+            <?php foreach ($usuarios as $usuario): ?>
 
+                <input type="text" name="nome" value="<?= $usuario['nome'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="text" name="sobrenome" value="<?= $usuario['sobrenome'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="number" name="email" value="<?= $usuario['email'] ?>" class="form-control" style="margin-bottom: 20px;">
+                <input type="number" name="senha" value="<?= $usuario['senha'] ?>" class="form-control" style="margin-bottom: 20px;">
+
+                <input class="btn btn-primary" type="submit" name="salvar" value="Salvar">
+                <button class="btn btn-primary" style="margin-left: 50px" name="excluir"><a href="excluir-jogadores.php?id=<?= $usuario['id'] ?>" style="text-decoration: none; color: white">Excluir</a></button>
+
+            <?php endforeach; ?>
         </form>
+
     </center>
 
     <center>

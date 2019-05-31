@@ -26,12 +26,14 @@ class Usuario extends Banco {
         return $instrucao->fetchAll();
     }
 
-    public function select3($email)
+    public function select3($email) //Essse select retornará somente os dados de um único jogador solicitado, na página Informacoes-jogadors.php
     {
         $instrucao = $this->pdo->query("SELECT * FROM USUARIO WHERE EMAIL = '$email'");
         return $instrucao->fetchAll();
     }
-    public function selectNome($email){
+
+    public function selectNome($email)
+    {
         $instrucao = $this->pdo->query("SELECT NOME FROM USUARIO WHERE EMAIL = $email");
         return $instrucao->fetchAll();
     }
@@ -51,6 +53,18 @@ class Usuario extends Banco {
         }
         return $instrucao->execute();
     }
+
+    public function update($nome, $sobrenome, $email, $senha)
+    {
+        $sql = "UPDATE USUARIO SET NOME=:nome,SOBRENOME=:sobrenome,EMAIL=:email,SENHA=:senha WHERE EMAIL=:email";
+        $instrucao = $this->pdo->prepare($sql);
+        $instrucao->bindParam(':nome', $nome);
+        $instrucao->bindParam(':sobrenome', $sobrenome);
+        $instrucao->bindParam(':email', $email);
+        $instrucao->bindParam(':senha', $senha);
+        return $instrucao->execute();
+    }
+
     public function delete($id)
     {
         $sql = "DELETE FROM USUARIO WHERE ID=:id";

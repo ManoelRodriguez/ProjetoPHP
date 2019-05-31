@@ -9,7 +9,6 @@ if (isset($_POST['nome']))
 {
     $usuarios = new Usuario('usuarios');
     $usuarios->inserir([$_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['senha']]);
-    header('LOCATION: exibir-usuarios.php');
 }
 ?>
 <!DOCTYPE html>

@@ -7,10 +7,15 @@ if (!isset($_SESSION['email']))
 { //Se não houver usuário autenticado
     header('LOCATION: login.php'); //Redireciona para autenticação
 }
+
 $_SESSION['email'] ?? null;
 $email = $_SESSION['email'];
 $usuario = new Usuario('usuarios');
 $usuarios = $usuario->select3($email);
+if (!is_null($_POST['salvar']))
+{
+    $usuario->update($_POST['nome'], $_POST['sobrenome'], $_POST['email'], $_POST['senha']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

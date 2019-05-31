@@ -5,9 +5,10 @@ require 'Usuario.php';
 $id = $_GET['id'] ?? null;
 $jogador = new Jogador('jogadores');
 $jogadores = $jogador->select2($id);
-//if(!is_null('salvar')){
-//    $jogador->update($_POST['nome'], $_POST['time'], $_POST['gols']);
-//}
+if(!is_null($_POST['salvar'])){
+    $jogador->update($id ,$_POST['nome'], $_POST['time'], $_POST['gols']);
+    header('LOCATION: classificacao.php');
+}
 session_start();
 if (!isset($_SESSION['email']))
 { //Se não houver usuário autenticado
